@@ -1,17 +1,22 @@
 # LeadScorer AI
+
 A smart sales dashboard that uses AI to score leads (hot vs cold) based on website behavior.
 
 ## Tech Stack
 - **Backend:** FastAPI (Python)
 - **Database:** PostgreSQL (Supabase)
-- **Frontend:** React
+- **Frontend:** React (Coming soon)
+- **ML Library:** Scikit-Learn
 
 ## Features
-- ✅ Add leads via API
+- ✅ Add leads manually via API
 - ✅ Fetch all leads from database
-- 🚧 CSV upload -->soon
-- 🚧 ML scoring -->soon
-- 🚧 React dashboard -->soon
+- ✅ Bulk CSV upload (Pandas ETL pipeline)
+- ✅ AI scoring (Logistic Regression) to predict Hot/Cold leads
+- ✅ Model saved and reused (`ml_model.pkl`)
+- React Dashboard (In progress)
+
+## How to Run Locally
 
 1. Clone this repository
    ```bash
