@@ -15,7 +15,7 @@ function App(){
                 Dashboard</Link>
               </li>
               <li>
-                <Link to="/leads" className="block py-2 px-4 hover:bg-gray-700 rounded transition">
+                <Link to="/leads" className="block cdpy-2 px-4 hover:bg-gray-700 rounded transition">
                 Leads</Link>
               </li>
             </ul>

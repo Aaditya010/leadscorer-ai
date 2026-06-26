@@ -10,10 +10,18 @@ import pandas as pd
 import io
 from sklearn.linear_model import LogisticRegression
 import joblib
+from fastapi.middleware.cors import CORSMiddleware
+
 
 load_dotenv()
 
 app=FastAPI(title="LeadScorer AI")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  
+    allow_credentials=True,
+    allow_methods=["*"],                    
+)
 
 DATABASE_URL=os.getenv("DATABASE_URL")
 
@@ -136,17 +144,6 @@ async def train_and_predict():
   db.close()
 
   return {"message": f"AI trained and scored {len(all_leads)} leads! Model saved."}
-
-
-
-  
-
-
-
-
-
-
-
 
 #to check view all leads
 @app.get("/leads/")
