@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-hot-toast';
 import {
   Bar,
   BarChart,
@@ -14,6 +15,7 @@ import {
   XAxis, YAxis
 } from 'recharts';
 import api from '../api';
+
 
 //API
 const fetchLeads = async () => {
@@ -52,16 +54,26 @@ function Dashboard() {
     onSuccess: () => {
       setHasUploaded(true); 
       queryClient.invalidateQueries({ queryKey: ['leads'] });
+      toast.success('CSV uploaded successfully!')
+    },
+    onError: (error) => {
+    console.error(error);
+    toast.error('Upload failed. Check console.');
     },
   });
 
   // Run predictions
   const predictMutation = useMutation({
-    mutationFn: runPredictions,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['leads'] });
-    },
-  });
+  mutationFn: runPredictions,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['leads'] });
+    toast.success('Predictions completed!');
+  },
+  onError: (error) => {
+    console.error(error);
+    toast.error('Prediction failed.'); 
+  },
+});
 
   // Drag-and-drop
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -120,7 +132,7 @@ function Dashboard() {
     return (
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
-
+      
       {/* UPLOAD ZONE */}
       <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 mb-8">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">Upload CSV</h2>
@@ -174,7 +186,6 @@ function Dashboard() {
         )}
       </div>
 
-      {/* SUMMARY CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
           <p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Leads</p>
@@ -194,7 +205,6 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* CHARTS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Leads by Industry</h2>
