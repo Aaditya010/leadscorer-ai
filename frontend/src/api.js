@@ -1,11 +1,9 @@
 import axios from 'axios';
 
 const API_URL = 'https://leadscorer-ai.onrender.com';
-console.log('🔍 API_URL is set to:', API_URL);
-
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
